@@ -1,0 +1,36 @@
+
+.in4-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+}
+
+.in4-overlay-item {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: rgb(255, 133, 124);
+    border: solid 1px black;
+    box-shadow: 0 0 2px 2px #fff;
+}
+
+.in4-overlay-item:hover {
+    border: none;
+    opacity: 0.5;
+    background-color: #fff;
+    box-shadow:
+      0 0 2px 3px #fff,
+      0 0 5px 5px #f0f,
+      0 0 10px 8px #0ff;
+}
+
+.in4-overlay-description {
+    background-color: yellow;
+    position: absolute;
+    margin: 0;
+    top: 100px;
+    left: 100px;
+}
