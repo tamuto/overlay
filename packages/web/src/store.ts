@@ -6,7 +6,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import * as Y from 'yjs'
 import { WebsocketProvider } from 'y-websocket'
-import { OVERLAY_FORMAT_VERSION, type Annotation, type DocumentRef, type OverlayFile } from '@overlay/core'
+import { OVERLAY_FORMAT_VERSION, type Annotation, type DocumentRef, type OverlayFile } from '@infodb/overlay'
 
 export interface Peer {
   clientId: number
@@ -30,7 +30,7 @@ const COLORS = ['#e11d48', '#2563eb', '#16a34a', '#d97706', '#7c3aed', '#0891b2'
 export const colorFor = (name: string) => COLORS[[...name].reduce((h, c) => h + c.charCodeAt(0), 0) % COLORS.length]!
 
 function storageKey(key: string) {
-  return `overlay:${key}`
+  return `in4o:doc:${key}`
 }
 
 export function useOverlayStore(docKey: string | null, room: string | null, userName: string): OverlayStore {

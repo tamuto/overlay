@@ -28,6 +28,15 @@ export function createAnnotation(
   }
 }
 
+/** Create an annotation for any target (e.g. an ElementSelector on an app screen). */
+export function newAnnotation(
+  target: Annotation['target'],
+  init: Pick<Annotation, 'kind' | 'text' | 'author'> & Partial<Annotation>,
+): Annotation {
+  const now = new Date().toISOString()
+  return { id: newId(), status: 'open', replies: [], createdAt: now, updatedAt: now, ...init, target }
+}
+
 /** Re-target an (e.g. orphaned) annotation to a new range, keeping its history. */
 export function reanchor(a: Annotation, text: string, fp: string, range: { start: number; end: number }): Annotation {
   return {

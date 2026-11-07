@@ -1,0 +1,19 @@
+{
+  "name": "react-app-example",
+  "private": true,
+  "type": "module",
+  "scripts": { "dev": "vite --port 5180", "build": "vite build" },
+  "dependencies": {
+    "@infodb/overlay": "workspace:*",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/vite": "^4.3.5",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "@vitejs/plugin-react": "^6.0.0",
+    "tailwindcss": "^4.3.5",
+    "vite": "^8.0.0"
+  }
+}

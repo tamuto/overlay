@@ -1,0 +1,2 @@
+@import "tailwindcss";
+body { @apply bg-slate-50 text-slate-900; font-family: system-ui, "Hiragino Sans", "Noto Sans JP", sans-serif; }

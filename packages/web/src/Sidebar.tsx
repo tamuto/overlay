@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { newId, quoteOf, type AnchorStatus, type Anchored, type Annotation, type AnnotationKind } from '@overlay/core'
+import { newId, quoteOf, type AnchorStatus, type Anchored, type Annotation, type AnnotationKind } from '@infodb/overlay'
 import { colorFor } from './store.ts'
 
 const ANCHOR_BADGE: Record<AnchorStatus, { label: string; cls: string; hint: string }> = {
