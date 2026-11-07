@@ -1,0 +1,203 @@
+{
+  "version": 1,
+  "document": {
+    "type": "app",
+    "source": "react-app-example",
+    "title": "受注管理 マニュアル"
+  },
+  "annotations": [
+    {
+      "id": "guide-01",
+      "kind": "guide",
+      "title": "受注の登録",
+      "text": "新しい受注を登録します。顧客・品目を入力して保存してください。",
+      "target": {
+        "selectors": [
+          {
+            "type": "ElementSelector",
+            "tag": "button",
+            "key": "orders.new",
+            "role": "button",
+            "name": "新規作成"
+          }
+        ],
+        "fingerprint": "",
+        "route": "/orders"
+      },
+      "author": {
+        "name": "system",
+        "kind": "human"
+      },
+      "status": "open",
+      "replies": [],
+      "createdAt": "2026-11-07T00:00:00.000Z",
+      "updatedAt": "2026-11-07T00:00:00.000Z",
+      "order": 1
+    },
+    {
+      "id": "guide-02",
+      "kind": "guide",
+      "title": "検索",
+      "text": "受注番号・顧客名・品目の一部で絞り込めます。",
+      "target": {
+        "selectors": [
+          {
+            "type": "ElementSelector",
+            "tag": "input",
+            "role": "textbox",
+            "name": "キーワード",
+            "id": "keyword"
+          }
+        ],
+        "fingerprint": "",
+        "route": "/orders"
+      },
+      "author": {
+        "name": "system",
+        "kind": "human"
+      },
+      "status": "open",
+      "replies": [],
+      "createdAt": "2026-11-07T00:00:00.000Z",
+      "updatedAt": "2026-11-07T00:00:00.000Z",
+      "order": 2
+    },
+    {
+      "id": "guide-03",
+      "kind": "guide",
+      "title": "状態の見方",
+      "text": "受付 → 出荷済 の順に進みます。「保留」は与信確認待ちです。",
+      "target": {
+        "selectors": [
+          {
+            "type": "ElementSelector",
+            "tag": "th",
+            "name": "状態"
+          }
+        ],
+        "fingerprint": "",
+        "route": "/orders"
+      },
+      "author": {
+        "name": "system",
+        "kind": "human"
+      },
+      "status": "open",
+      "replies": [],
+      "createdAt": "2026-11-07T00:00:00.000Z",
+      "updatedAt": "2026-11-07T00:00:00.000Z",
+      "order": 3
+    },
+    {
+      "id": "guide-04",
+      "kind": "guide",
+      "title": "受注の編集",
+      "text": "各行の「編集」から内容とステータスを変更できます。",
+      "target": {
+        "selectors": [
+          {
+            "type": "ElementSelector",
+            "tag": "a",
+            "key": "orders.edit",
+            "role": "link",
+            "name": "編集",
+            "scope": {
+              "key": "order-row"
+            }
+          }
+        ],
+        "fingerprint": "",
+        "route": "/orders"
+      },
+      "author": {
+        "name": "system",
+        "kind": "human"
+      },
+      "status": "open",
+      "replies": [],
+      "createdAt": "2026-11-07T00:00:00.000Z",
+      "updatedAt": "2026-11-07T00:00:00.000Z",
+      "order": 4
+    },
+    {
+      "id": "guide-05",
+      "kind": "guide",
+      "title": "ステータス",
+      "text": "出荷が完了したら「出荷済」に変更してください。",
+      "target": {
+        "selectors": [
+          {
+            "type": "ElementSelector",
+            "tag": "select",
+            "role": "combobox",
+            "name": "ステータス"
+          }
+        ],
+        "fingerprint": "",
+        "route": "/orders/:id"
+      },
+      "author": {
+        "name": "system",
+        "kind": "human"
+      },
+      "status": "open",
+      "replies": [],
+      "createdAt": "2026-11-07T00:00:00.000Z",
+      "updatedAt": "2026-11-07T00:00:00.000Z",
+      "order": 1
+    },
+    {
+      "id": "guide-06",
+      "kind": "guide",
+      "title": "保存",
+      "text": "変更内容を保存して一覧に戻ります。",
+      "target": {
+        "selectors": [
+          {
+            "type": "ElementSelector",
+            "tag": "button",
+            "key": "order.save",
+            "role": "button",
+            "name": "保存"
+          }
+        ],
+        "fingerprint": "",
+        "route": "/orders/:id"
+      },
+      "author": {
+        "name": "system",
+        "kind": "human"
+      },
+      "status": "open",
+      "replies": [],
+      "createdAt": "2026-11-07T00:00:00.000Z",
+      "updatedAt": "2026-11-07T00:00:00.000Z",
+      "order": 2
+    },
+    {
+      "id": "guide-07",
+      "kind": "guide",
+      "text": "オンにすると、出荷済に変更した時点で顧客へメールが送られます。",
+      "target": {
+        "selectors": [
+          {
+            "type": "ElementSelector",
+            "tag": "input",
+            "role": "checkbox",
+            "name": "出荷時に通知メールを送る"
+          }
+        ],
+        "fingerprint": "",
+        "route": "/settings"
+      },
+      "author": {
+        "name": "system",
+        "kind": "human"
+      },
+      "status": "open",
+      "replies": [],
+      "createdAt": "2026-11-07T00:00:00.000Z",
+      "updatedAt": "2026-11-07T00:00:00.000Z"
+    }
+  ]
+}

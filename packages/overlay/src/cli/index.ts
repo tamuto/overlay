@@ -1,5 +1,6 @@
 import { parseArgs } from 'node:util'
 import { readFile, writeFile } from 'node:fs/promises'
+import { existsSync } from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import {
@@ -12,8 +13,8 @@ import {
   quoteOf,
   toMarkdownReport,
   type OverlayFile,
-} from '@overlay/core'
-import { createProvider, loadDocument, overlayPath, readOverlay, startServer, writeOverlay } from '@overlay/server'
+} from '../core/index.ts'
+import { createProvider, loadDocument, overlayPath, readOverlay, startServer, writeOverlay } from '../server/index.ts'
 
 const HELP = `overlay – 元文書に手を入れずに添削を重ねるレビューツール (prototype)
 
@@ -77,7 +78,8 @@ async function main() {
   switch (cmd) {
     case 'serve': {
       const root = path.resolve(target ?? values.root ?? '.')
-      const staticDir = path.resolve(here, '../../web/dist')
+      // dist/cli/index.js -> dist/web ; src/cli/index.ts (dev) -> dist/web
+      const staticDir = [path.resolve(here, '../web'), path.resolve(here, '../../dist/web')].find((d) => existsSync(path.join(d, 'index.html')))
       const { url, dataDir } = startServer({
         root,
         dataDir: values.data,

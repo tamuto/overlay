@@ -1,0 +1,48 @@
+{
+  "name": "@infodb/overlay",
+  "version": "0.1.0",
+  "description": "元のドキュメントや Web アプリに手を入れずに、添削・メモ・操作ガイドを重ねて表示・共有する",
+  "license": "MIT",
+  "type": "module",
+  "repository": { "type": "git", "url": "git+https://github.com/tamuto/overlay.git" },
+  "files": ["dist"],
+  "bin": { "overlay": "./dist/cli/index.js" },
+  "exports": {
+    ".": {
+      "source": "./src/core/index.ts",
+      "types": "./dist/core/index.d.ts",
+      "default": "./dist/core/index.js"
+    },
+    "./embed": {
+      "source": "./src/embed/index.ts",
+      "types": "./dist/embed/index.d.ts",
+      "default": "./dist/embed/index.js"
+    },
+    "./server": {
+      "source": "./src/server/index.ts",
+      "types": "./dist/server/index.d.ts",
+      "default": "./dist/server/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsx watch --no-experimental-webstorage src/cli/index.ts serve ../../examples --port 4141 --ai mock"
+  },
+  "dependencies": {
+    "@floating-ui/dom": "^1.8.0",
+    "@hono/node-server": "^2.1.6",
+    "hono": "^4.13.16",
+    "lib0": "^0.2.119",
+    "linkedom": "^0.18.15",
+    "marked": "^18.1.3",
+    "ws": "^8.22.1",
+    "y-protocols": "^1.0.7",
+    "yjs": "^13.6.33"
+  },
+  "devDependencies": {
+    "@types/ws": "^8.18.2",
+    "tsup": "^9.0.0"
+  },
+  "engines": { "node": ">=22" }
+}

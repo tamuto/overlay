@@ -11,6 +11,7 @@
     "isolatedModules": true,
     "verbatimModuleSyntax": true,
     "allowImportingTsExtensions": true,
+    "customConditions": ["source"],
     "noEmit": true
   }
 }

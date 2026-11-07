@@ -15,7 +15,7 @@ import * as syncProtocol from 'y-protocols/sync'
 import * as awarenessProtocol from 'y-protocols/awareness'
 import * as encoding from 'lib0/encoding'
 import * as decoding from 'lib0/decoding'
-import { emptyOverlay, OVERLAY_FORMAT_VERSION, type Annotation, type DocumentRef, type OverlayFile } from '@overlay/core'
+import { emptyOverlay, OVERLAY_FORMAT_VERSION, type Annotation, type DocumentRef, type OverlayFile } from '../core/index.ts'
 import { readOverlay, refFromRoom, writeOverlay } from './documents.ts'
 
 const MSG_SYNC = 0

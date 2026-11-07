@@ -4,7 +4,7 @@ import { serveStatic } from '@hono/node-server/serve-static'
 import { WebSocketServer } from 'ws'
 import { existsSync } from 'node:fs'
 import path from 'node:path'
-import { parseOverlay } from '@overlay/core'
+import { parseOverlay } from '../core/index.ts'
 import { CollabHub } from './collab.ts'
 import { listDocuments, loadDocument, refFromRoom } from './documents.ts'
 import type { AiProvider } from './ai.ts'
@@ -33,7 +33,7 @@ export interface ServerOptions {
  * forces a CORS preflight that we never approve) and a same-host Origin.
  */
 function isTrustedRequest(headers: Headers, host: string | undefined): boolean {
-  if (headers.get('x-overlay-client') !== '1') return false
+  if (headers.get('x-in4o-client') !== '1') return false
   const origin = headers.get('origin')
   if (!origin) return true // non-browser client (CLI, curl)
   try {

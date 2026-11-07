@@ -16,7 +16,7 @@ import { spawn } from 'node:child_process'
 import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import path from 'node:path'
-import { buildReviewPrompt, FINDINGS_SCHEMA, parseFindings, type AiFinding, type ReviewRequest } from '@overlay/core'
+import { buildReviewPrompt, FINDINGS_SCHEMA, parseFindings, type AiFinding, type ReviewRequest } from '../core/index.ts'
 
 export interface AiProvider {
   name: string
@@ -57,7 +57,7 @@ export const codexProvider = (model?: string): AiProvider => ({
   description: 'Codex CLI（Sign in with ChatGPT / ローカル実行・プラン内）',
   async review(req, signal) {
     // run in an empty temp dir with a read-only sandbox: the agent gets nothing to touch
-    const dir = await mkdtemp(path.join(tmpdir(), 'overlay-codex-'))
+    const dir = await mkdtemp(path.join(tmpdir(), 'in4o-codex-'))
     try {
       const schema = path.join(dir, 'schema.json')
       const outFile = path.join(dir, 'out.json')
@@ -78,7 +78,7 @@ export const claudeProvider = (model?: string): AiProvider => ({
   name: 'claude',
   description: 'Claude Code CLI（ローカル実行・プラン内）',
   async review(req, signal) {
-    const dir = await mkdtemp(path.join(tmpdir(), 'overlay-claude-'))
+    const dir = await mkdtemp(path.join(tmpdir(), 'in4o-claude-'))
     try {
       const args = ['-p', '--output-format', 'json', '--tools', '', '--json-schema', JSON.stringify(FINDINGS_SCHEMA)]
       if (model) args.push('--model', model)

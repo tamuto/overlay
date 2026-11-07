@@ -1,5 +1,5 @@
 import DOMPurify from 'dompurify'
-import { markdownDocument, type AiFinding, type DocumentRef } from '@overlay/core'
+import { markdownDocument, type AiFinding, type DocumentRef } from '@infodb/overlay'
 
 export interface ServerInfo {
   mode: 'server'
@@ -14,7 +14,7 @@ export interface LoadedDoc {
   room: string | null
 }
 
-const headers = { 'x-overlay-client': '1' }
+const headers = { 'x-in4o-client': '1' }
 
 async function json<T>(res: Response): Promise<T> {
   const body = await res.json().catch(() => ({}))

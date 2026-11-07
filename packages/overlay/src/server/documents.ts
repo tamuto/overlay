@@ -2,7 +2,7 @@ import { readFile, readdir, mkdir, writeFile, stat } from 'node:fs/promises'
 import path from 'node:path'
 import { parseHTML } from 'linkedom'
 import { createHash } from 'node:crypto'
-import { extractText, readableText, fingerprint, markdownDocument, parseOverlay, type DocumentRef, type OverlayFile } from '@overlay/core'
+import { extractText, readableText, fingerprint, markdownDocument, parseOverlay, type DocumentRef, type OverlayFile } from '../core/index.ts'
 
 export interface LoadedDocument {
   ref: DocumentRef
@@ -146,7 +146,7 @@ export async function loadDocument(
     const u = new URL(input.url)
     if (!/^https?:$/.test(u.protocol)) throw new Error('only http(s) URLs are supported')
     if (opts.blockPrivateNetworks && isPrivateHost(u.hostname)) throw new Error('private network targets are blocked')
-    const res = await fetch(u, { headers: { 'user-agent': 'overlay-review/0.1', accept: 'text/html,text/markdown,text/plain' }, redirect: 'follow' })
+    const res = await fetch(u, { headers: { 'user-agent': 'infodb-overlay/0.1', accept: 'text/html,text/markdown,text/plain' }, redirect: 'follow' })
     if (!res.ok) throw new Error(`fetch failed: ${res.status}`)
     const body = await res.text()
     const ctype = res.headers.get('content-type') ?? ''

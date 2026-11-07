@@ -1,12 +1,13 @@
 {
-  "name": "overlay",
+  "name": "infodb-overlay-workspace",
   "private": true,
   "type": "module",
   "packageManager": "pnpm@10.20.0",
   "scripts": {
-    "dev": "pnpm --parallel --filter @overlay/web --filter @overlay/cli dev",
-    "build": "pnpm --filter @overlay/web build",
-    "overlay": "node --no-experimental-webstorage --import tsx packages/cli/src/index.ts",
+    "dev": "pnpm --parallel --filter @infodb/overlay --filter @infodb/overlay-web dev",
+    "build": "pnpm --filter @infodb/overlay-web build && pnpm --filter @infodb/overlay build",
+    "overlay": "node --no-experimental-webstorage --import tsx packages/overlay/src/cli/index.ts",
+    "example": "pnpm --filter react-app-example dev",
     "test": "vitest run",
     "typecheck": "pnpm -r exec tsc -p . --noEmit"
   },

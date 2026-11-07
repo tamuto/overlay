@@ -8,7 +8,7 @@ import {
   reanchor,
   toMarkdownReport,
   type AnnotationKind,
-} from '@overlay/core'
+} from '@infodb/overlay'
 import { aiReview, download, fetchInfo, listFiles, loadLocalFile, loadRemote, toParams, type LoadedDoc, type ServerInfo } from './api.ts'
 import { DocumentFrame, type FrameSelection } from './DocumentFrame.tsx'
 import { AnnotationCard, Composer, FILTERS, matchesFilter, type Filter } from './Sidebar.tsx'
@@ -17,14 +17,14 @@ import { colorFor, useOverlayStore } from './store.ts'
 function useUserName() {
   const [name, setName] = useState(() => {
     try {
-      return localStorage.getItem('overlay:user') || `reviewer-${Math.floor(Math.random() * 900 + 100)}`
+      return localStorage.getItem('in4o:user') || `reviewer-${Math.floor(Math.random() * 900 + 100)}`
     } catch {
       return 'reviewer'
     }
   })
   useEffect(() => {
     try {
-      localStorage.setItem('overlay:user', name)
+      localStorage.setItem('in4o:user', name)
     } catch {
       /* ignore */
     }
@@ -234,7 +234,7 @@ export function App() {
                 focus(id, false)
                 const a = anchored.find((x) => x.annotation.id === id)
                 if (a && !matchesFilter(filter, a)) setFilter('all')
-                document.getElementById(`card-${id}`)?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
+                document.getElementById(`in4o-card-${id}`)?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
               }}
               onNavigate={(url) => {
                 if (info && confirm(`${url}\nをオーバーレイで開きますか？（キャンセルで新しいタブ）`)) void open({ url })
@@ -333,7 +333,7 @@ export function App() {
               <p className="rounded-lg border border-dashed border-stone-300 p-4 text-center text-sm text-stone-500">本文のテキストを選択して指摘を追加</p>
             )}
             {visible.map((item) => (
-              <div id={`card-${item.annotation.id}`} key={item.annotation.id}>
+              <div id={`in4o-card-${item.annotation.id}`} key={item.annotation.id}>
                 <AnnotationCard
                   index={indexOf.get(item.annotation.id)!}
                   item={item}

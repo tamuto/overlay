@@ -5,7 +5,9 @@
 import { normalizeText, type NormalizedText } from './text.ts'
 
 const SKIP = new Set(['SCRIPT', 'STYLE', 'NOSCRIPT', 'TEMPLATE', 'svg', 'SVG'])
-export const MARK_ATTR = 'data-overlay-id'
+/** Prefix for every DOM attribute / class / storage key this library creates. */
+export const IN4O = 'in4o'
+export const MARK_ATTR = 'data-in4o-mark-id'
 
 export function textNodes(root: Node): Text[] {
   const out: Text[] = []
@@ -105,7 +107,7 @@ export function highlight(
   end: number,
   id: string,
   ownerDocument: Document,
-  className = 'overlay-mark',
+  className = 'in4o-mark',
 ): HTMLElement[] {
   const rs = doc.toRaw[start]
   const rLast = doc.toRaw[Math.max(start, end - 1)]

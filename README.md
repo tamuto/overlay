@@ -1,6 +1,10 @@
-# overlay
+# @infodb/overlay
 
-元のドキュメント（Markdown / HTML / Web ページ）には一切手を入れずに、**添削（コメント・修正提案）を重ねて表示・共有する**レビューツールのプロトタイプです。
+元のドキュメントや Web アプリには一切手を入れずに、**添削・メモ・操作ガイドを重ねて表示・共有する**ツールのプロトタイプです。
+
+- **ドキュメントのレビュー**: Markdown / HTML / Web ページに添削（コメント・修正提案）を重ねる（`overlay serve`）
+- **Web アプリへの吹き出し**: 動いている React などのアプリ画面に、マニュアルのガイドやユーザーのメモを重ねる（`@infodb/overlay/embed`、[docs/embed.md](docs/embed.md)）
+
 
 - 指摘は別ファイル `*.overlay.json` に保存されます（原本は読み取り専用）
 - 文書が更新されても、引用テキストと前後の文脈から指摘箇所を**再特定**します。見つからない指摘も消さずに「参照先消失」として残します
@@ -11,7 +15,7 @@
 
 ```bash
 pnpm install
-pnpm build                                   # Web UI をビルド（packages/web/dist）
+pnpm build                                   # Web UI とパッケージをビルド（packages/overlay/dist）
 pnpm overlay serve examples --ai mock        # http://127.0.0.1:4141
 ```
 
@@ -22,6 +26,12 @@ pnpm overlay serve examples --ai mock        # http://127.0.0.1:4141
 
 ```bash
 pnpm dev     # Vite (http://localhost:5173) + API サーバ (4141, --ai mock) を同時起動
+```
+
+Web アプリへの吹き出しを試す:
+
+```bash
+pnpm example     # http://localhost:5180  （?author を付けるとガイド作成モード）
 ```
 
 ## CLI
@@ -49,14 +59,24 @@ guide.md
 
 ## 構成
 
-| パッケージ | 役割 |
-| --- | --- |
-| `packages/core` | フレームワーク非依存。データモデル、アンカリング（再特定）、DOM ハイライト、マージ、レポート、AI プロンプト/スキーマ |
-| `packages/server` | Hono（`@hono/node-server`）。文書の読み込み・サニタイズ、URL 取得、overlay ファイル保存、Yjs 同期（WebSocket）、AI プロバイダ |
-| `packages/cli` | `overlay` コマンド（serve / check / report / review） |
-| `packages/web` | React 19 + Tailwind CSS v4 + Vite。サーバなし（静的ホスティング）でも動作 |
+公開するのは `@infodb/overlay` 1パッケージで、用途ごとに読み込み先を分けています。
 
-詳しい設計判断は [docs/design.md](docs/design.md) を参照してください。
+| 読み込み先 | 中身 | 実行環境 |
+| --- | --- | --- |
+| `@infodb/overlay` | データモデル、文章のアンカリング（再特定）、DOM ハイライト、マージ、レポート、AI プロンプト/スキーマ | ブラウザ / Node |
+| `@infodb/overlay/embed` | Web アプリ画面への吹き出し・メモ（要素の特定、ガイドツアー、ピン） | ブラウザ |
+| `@infodb/overlay/server` | Hono サーバ（文書の読み込み・URL 取得・保存・Yjs 同期・AI） | Node |
+| `overlay` コマンド | serve / check / report / review（レビュー UI を同梱） | Node |
+
+リポジトリ:
+
+| パス | 内容 |
+| --- | --- |
+| `packages/overlay` | 公開パッケージ本体（`src/core` `src/embed` `src/server` `src/cli`）。tsup でビルド |
+| `packages/web` | レビュー UI（React 19 + Tailwind v4 + Vite、非公開）。ビルド結果は `packages/overlay/dist/web` に入る |
+| `examples/react-app` | embed を組み込んだ React のサンプルアプリ |
+
+詳しい設計判断は [docs/design.md](docs/design.md) と [docs/embed.md](docs/embed.md) を参照してください。
 
 ## 動作モード
 
@@ -70,6 +90,6 @@ guide.md
 ## テスト
 
 ```bash
-pnpm test        # core のアンカリング/マージのユニットテスト (vitest)
+pnpm test        # アンカリング・要素特定・マージのユニットテスト (vitest)
 pnpm typecheck
 ```

@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import { clearHighlights, extractText, highlight, rangeToOffsets, readableText, type Anchored, type DocText } from '@overlay/core'
+import { clearHighlights, extractText, highlight, rangeToOffsets, readableText, type Anchored, type DocText } from '@infodb/overlay'
 
 export interface FrameSelection {
   start: number
@@ -23,15 +23,15 @@ interface Props {
 }
 
 const FRAME_CSS = `
-mark.overlay-mark{color:inherit;background:rgba(251,191,36,.32);border-bottom:2px solid #f59e0b;border-radius:2px;padding:0;cursor:pointer;transition:background .15s}
-mark.overlay-mark.k-suggestion{background:rgba(56,189,248,.25);border-bottom-color:#0284c7}
-mark.overlay-mark.s-draft{background:rgba(167,139,250,.22);border-bottom:2px dashed #7c3aed}
-mark.overlay-mark.s-resolved{background:transparent;border-bottom:1px dotted #a8a29e}
-mark.overlay-mark.a-fuzzy{border-bottom-style:wavy;border-bottom-color:#ea580c}
-mark.overlay-mark.is-active{background:rgba(250,204,21,.65);box-shadow:0 0 0 2px rgba(234,179,8,.55)}
-mark.overlay-mark.overlay-pending{background:rgba(34,197,94,.3);border-bottom-color:#16a34a}
-mark.overlay-mark[data-overlay-n]::after{content:attr(data-overlay-n);display:inline-block;margin-left:2px;padding:0 4px;min-width:1.1em;font:600 10px/1.5 system-ui,sans-serif;color:#fff;background:#57534e;border-radius:8px;vertical-align:super;text-align:center}
-mark.overlay-mark.is-active[data-overlay-n]::after{background:#ca8a04}
+mark.in4o-mark{color:inherit;background:rgba(251,191,36,.32);border-bottom:2px solid #f59e0b;border-radius:2px;padding:0;cursor:pointer;transition:background .15s}
+mark.in4o-mark.in4o-k-suggestion{background:rgba(56,189,248,.25);border-bottom-color:#0284c7}
+mark.in4o-mark.in4o-s-draft{background:rgba(167,139,250,.22);border-bottom:2px dashed #7c3aed}
+mark.in4o-mark.in4o-s-resolved{background:transparent;border-bottom:1px dotted #a8a29e}
+mark.in4o-mark.in4o-a-fuzzy{border-bottom-style:wavy;border-bottom-color:#ea580c}
+mark.in4o-mark.in4o-active{background:rgba(250,204,21,.65);box-shadow:0 0 0 2px rgba(234,179,8,.55)}
+mark.in4o-mark.in4o-pending{background:rgba(34,197,94,.3);border-bottom-color:#16a34a}
+mark.in4o-mark[data-in4o-mark-n]::after{content:attr(data-in4o-mark-n);display:inline-block;margin-left:2px;padding:0 4px;min-width:1.1em;font:600 10px/1.5 system-ui,sans-serif;color:#fff;background:#57534e;border-radius:8px;vertical-align:super;text-align:center}
+mark.in4o-mark.in4o-active[data-in4o-mark-n]::after{background:#ca8a04}
 `
 
 export function DocumentFrame(props: Props) {
@@ -70,7 +70,7 @@ export function DocumentFrame(props: Props) {
     })
     doc.addEventListener('click', (e) => {
       const t = e.target as Element
-      const mark = t.closest?.('mark[data-overlay-id]')
+      const mark = t.closest?.('mark[data-in4o-mark-id]')
       const link = t.closest?.('a[href]') as HTMLAnchorElement | null
       if (link) {
         e.preventDefault()
@@ -78,7 +78,7 @@ export function DocumentFrame(props: Props) {
         else if (link.hash) doc.getElementById(decodeURIComponent(link.hash.slice(1)))?.scrollIntoView({ behavior: 'smooth' })
         return
       }
-      if (mark && doc.getSelection()?.isCollapsed) cb.current.onMarkClick(mark.getAttribute('data-overlay-id')!)
+      if (mark && doc.getSelection()?.isCollapsed) cb.current.onMarkClick(mark.getAttribute('data-in4o-mark-id')!)
     })
     doc.addEventListener('scroll', () => cb.current.onSelect(null))
   }
@@ -92,27 +92,27 @@ export function DocumentFrame(props: Props) {
     let n = 0
     const draw = (start: number, end: number, id: string, cls: string, label?: string) => {
       const dt = extractText(root)
-      const marks = highlight(dt, start, end, id, doc, `overlay-mark ${cls}`)
-      if (label && marks.length) marks[marks.length - 1]!.setAttribute('data-overlay-n', label)
+      const marks = highlight(dt, start, end, id, doc, `in4o-mark ${cls}`)
+      if (label && marks.length) marks[marks.length - 1]!.setAttribute('data-in4o-mark-n', label)
     }
     for (const { annotation: a, anchor } of props.anchored) {
       n++
       if (anchor.status === 'orphaned') continue
       const cls = [
-        `k-${a.kind}`,
-        a.draft ? 's-draft' : a.status === 'resolved' ? 's-resolved' : '',
-        anchor.status === 'fuzzy' ? 'a-fuzzy' : '',
-        a.id === props.activeId ? 'is-active' : '',
+        `in4o-k-${a.kind}`,
+        a.draft ? 'in4o-s-draft' : a.status === 'resolved' ? 'in4o-s-resolved' : '',
+        anchor.status === 'fuzzy' ? 'in4o-a-fuzzy' : '',
+        a.id === props.activeId ? 'in4o-active' : '',
       ].join(' ')
       draw(anchor.start, anchor.end, a.id, cls, String(n))
     }
-    if (props.pending) draw(props.pending.start, props.pending.end, '__pending', 'overlay-pending')
+    if (props.pending) draw(props.pending.start, props.pending.end, '__pending', 'in4o-pending')
     docText.current = extractText(root)
   }, [props.anchored, props.activeId, props.pending, props.html])
 
   useEffect(() => {
     if (!props.scrollRequest) return
-    const el = body()?.querySelector(`mark[data-overlay-id="${CSS.escape(props.scrollRequest.id)}"]`)
+    const el = body()?.querySelector(`mark[data-in4o-mark-id="${CSS.escape(props.scrollRequest.id)}"]`)
     el?.scrollIntoView({ behavior: 'smooth', block: 'center' })
   }, [props.scrollRequest])
 
