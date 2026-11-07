@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+html, body, #root { height: 100%; }
+body { @apply bg-stone-100 text-stone-900 antialiased; font-family: system-ui, -apple-system, "Segoe UI", "Hiragino Sans", "Noto Sans JP", sans-serif; }
+
+@layer components {
+  .btn-primary { @apply inline-flex items-center justify-center rounded-md bg-stone-900 px-3 py-1.5 text-sm font-medium text-white hover:bg-stone-700 disabled:opacity-40; }
+  .btn-ghost { @apply inline-flex items-center justify-center rounded-md border border-stone-300 bg-white px-2.5 py-1 text-sm text-stone-700 hover:bg-stone-100 disabled:opacity-40; }
+}

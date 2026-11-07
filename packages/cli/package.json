@@ -1,0 +1,15 @@
+{
+  "name": "@overlay/cli",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "bin": { "overlay": "./bin/overlay.mjs" },
+  "scripts": {
+    "dev": "tsx watch --no-experimental-webstorage src/index.ts serve ../../examples --port 4141 --ai mock"
+  },
+  "dependencies": {
+    "@overlay/core": "workspace:*",
+    "@overlay/server": "workspace:*",
+    "tsx": "^4.20.0"
+  }
+}

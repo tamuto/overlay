@@ -1,13 +1,19 @@
 {
   "name": "overlay",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.20.0",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "serve": "infodb-cli serve -d sample"
+    "dev": "pnpm --parallel --filter @overlay/web --filter @overlay/cli dev",
+    "build": "pnpm --filter @overlay/web build",
+    "overlay": "node --no-experimental-webstorage --import tsx packages/cli/src/index.ts",
+    "test": "vitest run",
+    "typecheck": "pnpm -r exec tsc -p . --noEmit"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+  "devDependencies": {
+    "@types/node": "^24.10.0",
+    "tsx": "^4.20.0",
+    "typescript": "^5.9.3",
+    "vitest": "^4.0.0"
+  }
 }
